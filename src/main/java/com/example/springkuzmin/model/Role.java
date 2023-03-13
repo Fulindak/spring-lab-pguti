@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -16,7 +17,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role  implements Serializable {
 
     @Id
     @Column(name = "name", nullable = false)
