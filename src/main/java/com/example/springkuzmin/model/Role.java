@@ -9,11 +9,10 @@ import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
 import java.util.Objects;
 
-@AllArgsConstructor
+
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Accessors(chain = true)
 @Entity
 @Table(name = "roles")

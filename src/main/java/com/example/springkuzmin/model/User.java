@@ -12,7 +12,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Accessors(chain = true)
 @Entity
 @Table(name = "users")

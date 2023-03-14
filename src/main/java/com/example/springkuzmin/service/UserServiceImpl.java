@@ -10,6 +10,7 @@ import com.example.springkuzmin.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,8 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private static UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @NotNull
     @Override
@@ -94,7 +96,7 @@ public class UserServiceImpl implements UserService {
 
     @NotNull
     private User buildUserRequset(@NotNull UserRequest request) {
-        return new User().setId(request.getId())
+        return new User()
                 .setFirstName(request.getFirstName())
                 .setLastName(request.getLastName())
                 .setRole(new Role()
