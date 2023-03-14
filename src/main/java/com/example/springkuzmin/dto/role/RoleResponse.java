@@ -1,10 +1,10 @@
-package com.example.springkuzmin.dto;
+package com.example.springkuzmin.dto.role;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class RoleDTO {
+public class RoleResponse {
     private String name;
 }

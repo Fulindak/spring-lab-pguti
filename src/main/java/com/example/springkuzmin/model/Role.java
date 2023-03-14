@@ -5,9 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
-
-import java.io.Serializable;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -15,9 +14,10 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table(name = "roles")
-public class Role  implements Serializable {
+public class Role {
 
     @Id
     @Column(name = "name", nullable = false)

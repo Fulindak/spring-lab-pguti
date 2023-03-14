@@ -2,17 +2,18 @@ package com.example.springkuzmin.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@AllArgsConstructor
+
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table(name = "users")
 public class User {
@@ -28,8 +29,9 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 25)
     private String lastName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "role")
+    @ToString.Exclude
     private Role role;
 
     @Override

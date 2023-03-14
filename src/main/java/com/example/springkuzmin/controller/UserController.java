@@ -1,8 +1,9 @@
 package com.example.springkuzmin.controller;
 
-import com.example.springkuzmin.model.User;
-import com.example.springkuzmin.repository.UserRepository;
-import jakarta.persistence.EntityExistsException;
+import com.example.springkuzmin.dto.user.UserRequest;
+import com.example.springkuzmin.dto.user.UserResponse;
+import com.example.springkuzmin.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,43 +12,32 @@ import java.util.UUID;
 @RestController()
 @RequestMapping("/users")
 public class UserController {
-    private final UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserService userService;
 
     @GetMapping
-    public List<User> getAll() {
-        return  userRepository.findAll();
+    public List<UserResponse> findAll() {
+        return userService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public User getById(@PathVariable("id")UUID id) {
-        return userRepository.findById(id).get();
-    }
-
-    @DeleteMapping("/{id}")
-    public void remove(@PathVariable("id") UUID id) {
-        userRepository.deleteById(id);
-    }
-
-    @PutMapping
-    public User update(@RequestBody User user) {
-        if(userRepository.existsById(user.getId())) {
-            return  userRepository.save(user);
-        }
-        throw new EntityExistsException("User with id:" + user.getId() + " doesn`t exists");
+    @GetMapping(value = "/{userId}")
+    public UserResponse findById(@PathVariable UUID userId) {
+        return userService.findById(userId);
     }
 
     @PostMapping
-    public User create(@RequestBody User user){
-        UUID id = user.getId();
-        if(id !=null){
-            if(userRepository.existsById(user.getId())){
-                throw new EntityExistsException("User already exists");
-            }
-        }
-        return userRepository.save(user);
+    public  UserResponse create(@RequestBody UserRequest request) {
+        return userService.createUser(request);
+    }
+
+    @PostMapping(value = "{userId}")
+    public UserResponse update(@PathVariable UUID userId, @RequestBody UserRequest request) {
+        return userService.update(userId, request);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{userId}")
+    public void delete(@PathVariable UUID userId) {
+        userService.delete(userId);
     }
 }

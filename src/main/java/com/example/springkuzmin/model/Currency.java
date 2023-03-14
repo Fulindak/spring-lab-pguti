@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table(name = "currency")
 public class Currency {
@@ -23,7 +25,7 @@ public class Currency {
     private String name;
 
     @Column(name = "quantity")
-    private Long quantity;
+    private Double quantity;
 
     @Column(name = "exchange_rate")
     private Double exchangeRate;

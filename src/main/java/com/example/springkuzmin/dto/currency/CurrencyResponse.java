@@ -1,4 +1,4 @@
-package com.example.springkuzmin.dto;
+package com.example.springkuzmin.dto.currency;
 
 
 import lombok.Data;
@@ -8,9 +8,9 @@ import java.util.Date;
 
 @Data
 @Accessors(chain = true)
-public class CurrencyDTO {
+public class CurrencyResponse {
     private String name;
-    private Long quantity;
+    private Double quantity;
     private Double exchangeRate;
     private Date date;
 }
