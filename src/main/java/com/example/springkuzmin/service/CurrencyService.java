@@ -1,10 +1,12 @@
 package com.example.springkuzmin.service;
 
+import com.example.springkuzmin.dto.currency.CurrencyExchangeRateResponse;
 import com.example.springkuzmin.dto.currency.CurrencyRequest;
 import com.example.springkuzmin.dto.currency.CurrencyResponse;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.Date;
 
 
 public interface CurrencyService {
@@ -19,8 +21,10 @@ public interface CurrencyService {
     CurrencyResponse update(@NotNull String currencyName, @NotNull CurrencyRequest request);
 
     @NotNull
-    CurrencyResponse createUser(@NotNull CurrencyRequest request);
+    CurrencyResponse createCurrency(@NotNull CurrencyRequest request);
 
     void delete(@NotNull String currencyName);
+
+    CurrencyExchangeRateResponse getExchangeRateByDate(@NotNull String currencyName, @NotNull int months);
 
 }

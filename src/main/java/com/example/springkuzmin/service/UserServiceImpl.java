@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponse createUser(UserRequest request) {
-        User user = buildUserRequset(request);
+        User user = buildUserRequest(request);
         return buildUserResponse(userRepository.save(user));
     }
 
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @NotNull
-    private User buildUserRequset(@NotNull UserRequest request) {
+    private User buildUserRequest(@NotNull UserRequest request) {
         return new User()
                 .setFirstName(request.getFirstName())
                 .setLastName(request.getLastName())
