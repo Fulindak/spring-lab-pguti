@@ -12,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@RequiredArgsConstructor
 @Accessors(chain = true)
 @Entity
 @Table(name = "users")
@@ -32,6 +33,15 @@ public class User {
     @JoinColumn(name = "role")
     @ToString.Exclude
     private Role role;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "enabled")
+    private boolean enabled = true;
 
     @Override
     public boolean equals(Object o) {

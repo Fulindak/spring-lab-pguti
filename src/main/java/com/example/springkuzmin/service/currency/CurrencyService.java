@@ -1,4 +1,4 @@
-package com.example.springkuzmin.service;
+package com.example.springkuzmin.service.currency;
 
 import com.example.springkuzmin.dto.currency.CurrencyExchangeRateResponse;
 import com.example.springkuzmin.dto.currency.CurrencyRequest;

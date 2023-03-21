@@ -1,4 +1,4 @@
-package com.example.springkuzmin.service;
+package com.example.springkuzmin.service.user;
 
 import com.example.springkuzmin.dto.role.RoleRequest;
 import com.example.springkuzmin.dto.role.RoleResponse;

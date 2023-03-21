@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 @Component
-public class JwtUserIdTokenUtil implements JwtTokenUtil<UUID> {
+public class JwtUserIdTokenUtil implements JwtTokenUtil<UUID>, Serializable {
     public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60;
     @Value("${jwt.secret}")
     private String secret;

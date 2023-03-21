@@ -1,4 +1,4 @@
-package com.example.springkuzmin.service;
+package com.example.springkuzmin.service.user;
 
 import com.example.springkuzmin.dto.user.UserRequest;
 import com.example.springkuzmin.dto.user.UserResponse;

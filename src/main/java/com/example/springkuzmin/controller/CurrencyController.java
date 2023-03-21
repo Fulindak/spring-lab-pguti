@@ -3,7 +3,7 @@ package com.example.springkuzmin.controller;
 import com.example.springkuzmin.dto.currency.CurrencyExchangeRateResponse;
 import com.example.springkuzmin.dto.currency.CurrencyRequest;
 import com.example.springkuzmin.dto.currency.CurrencyResponse;
-import com.example.springkuzmin.service.CurrencyService;
+import com.example.springkuzmin.service.currency.CurrencyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

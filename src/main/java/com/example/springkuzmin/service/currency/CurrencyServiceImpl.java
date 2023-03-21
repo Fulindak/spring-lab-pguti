@@ -1,4 +1,4 @@
-package com.example.springkuzmin.service;
+package com.example.springkuzmin.service.currency;
 
 import com.example.springkuzmin.dto.currency.CurrencyExchangeRateResponse;
 import com.example.springkuzmin.dto.currency.CurrencyRequest;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

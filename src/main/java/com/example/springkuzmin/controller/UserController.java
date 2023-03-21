@@ -2,7 +2,7 @@ package com.example.springkuzmin.controller;
 
 import com.example.springkuzmin.dto.user.UserRequest;
 import com.example.springkuzmin.dto.user.UserResponse;
-import com.example.springkuzmin.service.UserService;
+import com.example.springkuzmin.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
