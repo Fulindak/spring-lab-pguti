@@ -4,7 +4,7 @@ import com.example.springkuzmin.dto.currency.CurrencyExchangeRateResponse;
 import com.example.springkuzmin.dto.currency.CurrencyRequest;
 import com.example.springkuzmin.dto.currency.CurrencyResponse;
 import com.example.springkuzmin.model.Currency;
-import com.example.springkuzmin.repository.CurrencyRepository;
+import com.example.springkuzmin.repository.CurrencyRepos;
 import com.example.springkuzmin.util.DateUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
@@ -23,13 +23,13 @@ import static java.util.Optional.ofNullable;
 public class CurrencyServiceImpl implements CurrencyService{
 
     @Autowired
-    private CurrencyRepository currencyRepository;
+    private CurrencyRepos currencyRepos;
 
     @NotNull
     @Override
     @Transactional(readOnly = true)
     public List<CurrencyResponse> findAll() {
-        return currencyRepository.findAll()
+        return currencyRepos.findAll()
                 .stream()
                 .map(this::buildCurrencyResponse)
                 .collect(Collectors.toList());
@@ -39,7 +39,7 @@ public class CurrencyServiceImpl implements CurrencyService{
     @Override
     @Transactional(readOnly = true)
     public CurrencyResponse findById(String currencyName) {
-        return currencyRepository.findById(currencyName)
+        return currencyRepos.findById(currencyName)
                 .map(this::buildCurrencyResponse)
                 .orElseThrow(() -> new EntityNotFoundException("Currency" + currencyName + "is not found"));
     }
@@ -57,10 +57,10 @@ public class CurrencyServiceImpl implements CurrencyService{
     @Override
     @Transactional
     public CurrencyResponse update(String currencyName, CurrencyRequest request) {
-        Currency currency = currencyRepository.findById(currencyName)
+        Currency currency = currencyRepos.findById(currencyName)
                 .orElseThrow(() -> new EntityNotFoundException("Currency" + currencyName + "is not found"));
         currencyUpdate(currency, request);
-        return buildCurrencyResponse(currencyRepository.save(currency));
+        return buildCurrencyResponse(currencyRepos.save(currency));
     }
 
     @NotNull
@@ -76,12 +76,12 @@ public class CurrencyServiceImpl implements CurrencyService{
     @Transactional
     public CurrencyResponse createCurrency(CurrencyRequest request) {
         Currency currency = buildCurrencyRequest(request);
-        return buildCurrencyResponse(currencyRepository.save(currency));
+        return buildCurrencyResponse(currencyRepos.save(currency));
     }
 
     @Override
     public void delete(String currencyName) {
-        currencyRepository.deleteById(currencyName);
+        currencyRepos.deleteById(currencyName);
     }
 
     @NotNull
@@ -97,7 +97,7 @@ public class CurrencyServiceImpl implements CurrencyService{
     @Override
     @Transactional(readOnly = true)
     public CurrencyExchangeRateResponse getExchangeRateByDate(String currencyName, int months) {
-        return buildCurrencyExchangeRateResponse(currencyRepository.findById(currencyName)
+        return buildCurrencyExchangeRateResponse(currencyRepos.findById(currencyName)
                 .orElseThrow(() -> new EntityNotFoundException("Currency" + currencyName + "is not found"))
         , months);
 

@@ -1,24 +1,79 @@
 package com.example.springkuzmin.service.user;
 
-import com.example.springkuzmin.dto.user.UserRequest;
-import com.example.springkuzmin.dto.user.UserResponse;
-import jakarta.validation.constraints.NotNull;
+
+import com.example.springkuzmin.model.User;
+import com.example.springkuzmin.repository.TokenRepos;
+import com.example.springkuzmin.repository.UserRepos;
+import jakarta.persistence.EntityExistsException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface UserService {
-    @NotNull
-    List<UserResponse> findAll();
-
-    @NotNull
-    UserResponse findById(@NotNull UUID userId);
-
-    @NotNull
-    UserResponse update(@NotNull UUID userId, @NotNull UserRequest request);
-
-    @NotNull
-    UserResponse createUser(@NotNull UserRequest request);
-
-    void delete(@NotNull UUID userId);
+@Service
+public class UserService implements UserCrudService {
+    private final UserRepos userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final TokenRepos tokenRepository;
+    @Autowired
+    public UserService(UserRepos userRepository,
+                       PasswordEncoder passwordEncoder,
+                       TokenRepos tokenRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenRepository = tokenRepository;
+    }
+    public User create(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+    public User update(User user, UUID id){
+        if(!userRepository.existsById(id)) {
+            throw new EntityExistsException("User with id:'"+ user.getId() +"' doesn't exists");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+    @Override
+    public void removeById(UUID id) {
+        userRepository.deleteById(id);
+    }
+    @Override
+    public void remove(User user) {
+        tokenRepository.findTokenByUserId(user.getId()).ifPresent(tokenRepository::delete);
+        userRepository.delete(user);
+    }
+    @Override
+    public void removeByUsername(String username) {
+        userRepository.removeByEmail(username);
+    }
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+    @Override
+    public User getById(UUID id) {
+        return userRepository.findById(id).orElseThrow(()->{
+            throw new EntityExistsException("user with id: " + id + " doesn't exists");
+        });
+    }
+    @Override
+    public User getByUsername(String username) {
+        return userRepository.findUserByEmail(username).orElseThrow(()->{
+            throw new UsernameNotFoundException("user with username: " + username
+                    + " doesn't exists");
+        });
+    }
+    @Override
+    public boolean existsById(UUID id) {
+        return userRepository.existsById(id);
+    }
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.findUserByEmail(username).isPresent();
+    }
 }
+

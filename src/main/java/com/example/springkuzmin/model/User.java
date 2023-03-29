@@ -1,58 +1,42 @@
 package com.example.springkuzmin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.Accessors;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Objects;
+import java.io.Serializable;
 import java.util.UUID;
-
 
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
-@Accessors(chain = true)
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "first_name", nullable = false, length = 25)
+    @Column(nullable = false, length = 25,name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 25)
+    @Column(nullable = false, length = 25, name = "last_name")
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @ManyToOne
     @JoinColumn(name = "role")
-    @ToString.Exclude
     private Role role;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "enabled")
+    @JsonIgnore
     private boolean enabled = true;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
-        return getId() != null && Objects.equals(getId(), user.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

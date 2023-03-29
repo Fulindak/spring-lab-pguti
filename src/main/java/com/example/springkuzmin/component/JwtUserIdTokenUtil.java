@@ -1,7 +1,9 @@
-package com.example.springkuzmin.util;
+package com.example.springkuzmin.component;
 
-import io.jsonwebtoken.JwtParser;
+
+import com.example.springkuzmin.util.JwtTokenUtil;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,14 +16,23 @@ import java.util.UUID;
 import java.util.function.Function;
 
 @Component
-public class JwtUserIdTokenUtil implements JwtTokenUtil<UUID>, Serializable {
+public class JwtUserIdTokenUtil implements Serializable, JwtTokenUtil<UUID> {
+
     public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60;
-    @Value("${jwt.secret}")
+
+    @Value("{jwt.secret}")
     private String secret;
-    public boolean validateToken(String token, UUID id) {
+
+    public boolean validateToken(String token, UUID id){
         final UUID uuid = getSubjectFromToken(token);
         return (uuid.equals(id) && !isTokenExpired(token));
     }
+
+    @Override
+    public boolean validteToken(String token, UUID subject) {
+        return false;
+    }
+
     public UUID getSubjectFromToken(String token){
         String id = getClaimFromToken(token, Claims::getSubject);
         id = id.substring(0, id.indexOf(secret));
