@@ -1,8 +1,8 @@
 package com.example.springkuzmin.controller;
 
 
-import com.example.springkuzmin.dto.user.UpdateDTO;
-import com.example.springkuzmin.dto.user.UserInfoDTO;
+import com.example.springkuzmin.dto.user.UpdateDto;
+import com.example.springkuzmin.dto.user.UserInfoDto;
 import com.example.springkuzmin.service.user.UserMeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +16,11 @@ public class MeRestController {
         this.userMeService = userMeService;
     }
     @GetMapping
-    public UserInfoDTO get(){
+    public UserInfoDto get(){
         return userMeService.get();
     }
     @PutMapping
-    public UserInfoDTO update(@RequestBody UpdateDTO user){
+    public UserInfoDto update(@RequestBody UpdateDto user){
         return userMeService.update(user);
     }
     @DeleteMapping

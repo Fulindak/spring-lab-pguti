@@ -30,7 +30,7 @@ public class Currency {
     @Column(name = "exchange_rate")
     private Double exchangeRate;
 
-    @Column(name = "date")
+    @Column(name = "date", columnDefinition = "DATE")
     private Date date;
 
     @Override

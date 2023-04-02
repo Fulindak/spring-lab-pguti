@@ -1,8 +1,8 @@
 package com.example.springkuzmin.service.user;
 
 
-import com.example.springkuzmin.dto.user.AuthDTO;
-import com.example.springkuzmin.dto.user.RegDTO;
+import com.example.springkuzmin.dto.user.AuthDto;
+import com.example.springkuzmin.dto.user.RegDto;
 import com.example.springkuzmin.model.Token;
 import com.example.springkuzmin.model.User;
 import com.example.springkuzmin.repository.RoleRepos;
@@ -21,7 +21,7 @@ public class UserRegService {
         this.roleRepository = roleRepository;
         this.userAuthService = userAuthService;
     }
-    public Token registration(RegDTO regDto) throws Exception {
+    public Token registration(RegDto regDto) throws Exception {
         if (userCrudService.existsByUsername(regDto.getEmail())) {
             throw new EntityExistsException("User with email: " + regDto.getEmail() + " already exists");
         }
@@ -29,11 +29,11 @@ public class UserRegService {
         user.setRole(roleRepository.findById("ROLE_USER").get());
         userCrudService.create(user);
         Token token = userAuthService.authorization(
-                new AuthDTO(user.getEmail(), regDto.getPassword())
+                new AuthDto(user.getEmail(), regDto.getPassword())
         );
         return token;
     }
-    private User fromRegDto(RegDTO regDto){
+    private User fromRegDto(RegDto regDto){
         User user = new User();
         user.setEnabled(true);
         user.setEmail(regDto.getEmail());

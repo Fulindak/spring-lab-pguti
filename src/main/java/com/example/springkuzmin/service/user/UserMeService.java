@@ -1,8 +1,8 @@
 package com.example.springkuzmin.service.user;
 
 
-import com.example.springkuzmin.dto.user.UpdateDTO;
-import com.example.springkuzmin.dto.user.UserInfoDTO;
+import com.example.springkuzmin.dto.user.UpdateDto;
+import com.example.springkuzmin.dto.user.UserInfoDto;
 import com.example.springkuzmin.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,7 @@ public class UserMeService{
     public UserMeService(UserCrudService userCrudService) {
         this.userCrudService = userCrudService;
     }
-    public UserInfoDTO update(UpdateDTO user) {
+    public UserInfoDto update(UpdateDto user) {
         User userEntity = fromUpdateDto(user);
         userEntity = userCrudService.update(userEntity, userEntity.getId());
         return toUserInfo(userEntity);
@@ -25,7 +25,7 @@ public class UserMeService{
         userCrudService.remove(user);
         SecurityContextHolder.getContext().setAuthentication(null);
     }
-    public UserInfoDTO get(){
+    public UserInfoDto get(){
         User user =  getAuthenticatedUser();
         return toUserInfo(user);
     }
@@ -36,14 +36,14 @@ public class UserMeService{
                 .getName()
         );
     }
-    private UserInfoDTO toUserInfo(User user){
-        return new UserInfoDTO(user.getId(),
+    private UserInfoDto toUserInfo(User user){
+        return new UserInfoDto(user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail()
         );
     }
-    private User fromUpdateDto(UpdateDTO updateDto){
+    private User fromUpdateDto(UpdateDto updateDto){
         User userEntity = new User();
         userEntity.setEmail(updateDto.getEmail());
         userEntity.setLastName(updateDto.getLastName());

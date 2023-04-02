@@ -6,13 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.UUID;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthDTO implements Serializable {
+public class UserInfoDto implements Serializable {
+
+    private UUID id;
+
+    private String firstName;
+
+    private String lastName;
+
     private String email;
 
-    private String password;
 }

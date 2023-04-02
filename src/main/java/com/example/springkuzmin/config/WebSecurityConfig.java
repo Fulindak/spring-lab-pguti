@@ -3,7 +3,9 @@ package com.example.springkuzmin.config;
 
 import com.example.springkuzmin.component.JwtAuthenticationEntryPoint;
 import com.example.springkuzmin.component.SuccessLogoutHandlerImpl;
+import com.example.springkuzmin.filter.ConfirmFilter;
 import com.example.springkuzmin.filter.JwtRequestFilter;
+import com.example.springkuzmin.filter.UserVerificationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +23,19 @@ public class WebSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtRequestFilter jwtRequestFilter;
+    private final UserVerificationFilter userVerificationFilter;
+    private final ConfirmFilter confirmFilter;
+
     @Autowired
     public WebSecurityConfig(UserDetailsService userDetailsService,
                              JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-                             JwtRequestFilter jwtRequestFilter) {
+                             JwtRequestFilter jwtRequestFilter,
+                             UserVerificationFilter userVerificationFilter, ConfirmFilter confirmFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtRequestFilter = jwtRequestFilter;
+        this.userVerificationFilter = userVerificationFilter;
+        this.confirmFilter = confirmFilter;
     }
     @Bean
     SecurityFilterChain web(HttpSecurity http, SuccessLogoutHandlerImpl successLogoutHandler) throws Exception {
@@ -36,7 +44,7 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeHttpRequests(
                         (authorize) -> authorize
-                                .requestMatchers("/auth/login", "/auth/reg")
+                                .requestMatchers("/auth/login", "/auth/reg", "/auth/confirm" )
                                 .permitAll()
                                 .requestMatchers("/currency", "/users")
                                 .permitAll()
@@ -62,6 +70,8 @@ public class WebSecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilterAfter(userVerificationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(confirmFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

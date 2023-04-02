@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegDTO extends AuthDTO{
+public class RegDto extends AuthDto {
 
     private  String firstName;
 

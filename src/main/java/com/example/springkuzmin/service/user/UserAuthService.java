@@ -1,7 +1,7 @@
 package com.example.springkuzmin.service.user;
 
 
-import com.example.springkuzmin.dto.user.AuthDTO;
+import com.example.springkuzmin.dto.user.AuthDto;
 import com.example.springkuzmin.model.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,11 +32,11 @@ public class UserAuthService {
         this.userDetailsService = userDetailsService;
         this.jwtTokenService = jwtTokenService;
     }
-    public Token authorization(AuthDTO authDto) throws Exception {
+    public Token authorization(AuthDto authDto) throws Exception {
         authenticate(authDto);
         return getToken(authDto.getEmail());
     }
-    private void authenticate(AuthDTO data) throws Exception {
+    private void authenticate(AuthDto data) throws Exception {
         try {
             UserDetails user = userDetailsService
                     .loadUserByUsername(data.getEmail());

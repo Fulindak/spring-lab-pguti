@@ -8,8 +8,8 @@ create table if not exists roles
 create table if not exists users
 (
     id          uuid         not null,
-    first_name  varchar(100) not null,
-    last_name   varchar(100) not null,
+    first_name  varchar not null,
+    last_name   varchar not null,
     role        varchar,
     UNIQUE      (id),
     PRIMARY KEY (id)

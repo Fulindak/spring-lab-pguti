@@ -1,20 +1,14 @@
 package com.example.springkuzmin.dto.user;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserInfoDTO implements Serializable {
-
-    private UUID id;
+public class UpdateDto implements Serializable {
 
     private String firstName;
 
@@ -22,4 +16,6 @@ public class UserInfoDTO implements Serializable {
 
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 }
