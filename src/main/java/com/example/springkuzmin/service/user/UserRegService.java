@@ -28,10 +28,9 @@ public class UserRegService {
         User user = fromRegDto(regDto);
         user.setRole(roleRepository.findById("ROLE_USER").get());
         userCrudService.create(user);
-        Token token = userAuthService.authorization(
+        return userAuthService.authorization(
                 new AuthDto(user.getEmail(), regDto.getPassword())
         );
-        return token;
     }
     private User fromRegDto(RegDto regDto){
         User user = new User();

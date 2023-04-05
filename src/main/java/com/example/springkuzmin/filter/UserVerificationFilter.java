@@ -27,7 +27,7 @@ public class UserVerificationFilter extends OncePerRequestFilter {
     }
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getRequestURI().equals("/auth/reg/confirm");
+        return request.getRequestURI().equals("/auth/confirm");
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request,
