@@ -46,7 +46,7 @@ public class WebSecurityConfig {
                         (authorize) -> authorize
                                 .requestMatchers("/auth/login", "/auth/reg", "/auth/confirm" )
                                 .permitAll()
-                                .requestMatchers("/currency", "/users", "/posts/images/")
+                                .requestMatchers("/currency", "/users", "/posts/images/", "/posts/")
                                 .permitAll()
                                 .requestMatchers(HttpMethod.POST)
                                 .hasAnyRole("ROLE_ADMIN", "ROLE_MODERN")
